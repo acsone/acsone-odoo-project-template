@@ -1,17 +1,16 @@
-{% if odoo_enterprise %}
+{%- if odoo_enterprise %}
 ./src/odoo-addons-enterprise:
-   remotes:
-     odoo: git@github.com:odoo/enterprise.git
-     acsone: ssh://git@github.com/acsone/enterprise.git
-   merges:
-     - odoo {{ odoo_series }}
-   target: acsone {{ odoo_series }}-{{ project_trigram }}_master
-   shell_command_after:
-     # Add a pyproject.toml so pip wheel works.
-     - gh --repo acsone/enterprise pr diff {% if odoo_series == "16.0" %}12{% else %}TODO{% endif %} --patch | git am
+  remotes:
+    odoo: git@github.com:odoo/enterprise.git
+    acsone: ssh://git@github.com/acsone/enterprise.git
+  merges:
+    - odoo {{ odoo_series }}
+  target: acsone {{ odoo_series }}-{{ project_trigram }}_master
+  shell_command_after:
+    # Add a pyproject.toml so pip wheel works.
+    - gh --repo acsone/enterprise pr diff {% if odoo_series == "16.0" %}12{% else %}TODO{% endif %} --patch | git am
 
-
-{% endif %}
+{%- endif %}
 ./src/odoo:
   remotes:
     odoo: https://github.com/odoo/odoo.git
