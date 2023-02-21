@@ -38,7 +38,7 @@ if db_name:
                 "-n",
                 database,
                 "--cache-prefix",
-                "ebt",
+                "{{ project_trigram }}",
             ]
         )
         if running_env != "prod":
