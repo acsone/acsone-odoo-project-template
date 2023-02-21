@@ -45,6 +45,9 @@ dependencies = [
   # Odoo enterprise addons
   "odoo-addons-enterprise",
   {% endif -%}
+  # Addons that don't are not declared in manifests
+  "odoo-addon-attachment_s3",
+  "odoo-addon-session_db",
   # Optional Odoo dependencies not in Odoo's setup.py
   "freezegun",
   "num2words",
