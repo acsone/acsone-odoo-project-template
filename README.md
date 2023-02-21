@@ -2,6 +2,9 @@
 
 This is a [copier](pypi.org/project/copier/) template for use in ACSONE Odoo projects.
 
+The aim of this template is to organize an Odoo project as a regular Python project,
+using modern Python standards and good practices.
+
 ⚠️ This project is meant for ACSONE internal use. Things may change without notice. ⚠️
 
 ## How to use this template
