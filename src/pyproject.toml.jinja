@@ -31,7 +31,7 @@ dev = [
 [project.scripts]
 
 [tool.hatch.build]
-packages = ["odoo", "odoo_{{ project_name }}"]
+packages = ["odoo", "odoo_{{ project_name|lower|replace(' ', '_') }}"]
 
 # Enable the hatch-odoo metadata hook to generate dependencies from addons manifests.
 [tool.hatch.metadata.hooks.odoo-addons-dependencies]
