@@ -29,7 +29,7 @@ odoo_enterprise:
   default: False
 
 python_version:
-  type: short
+  type: str
   default: "3.10"
   choices:
     - "3.10"
