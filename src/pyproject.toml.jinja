@@ -6,8 +6,8 @@ build-backend = "hatchling.build"
 # The standard project metadata section
 # https://packaging.python.org/en/latest/specifications/declaring-project-metadata/
 [project]
-name = "odoo-addons-{{ project_name }}"
-description = "{{ project_name|capitalize }} Odoo Addons"
+name = "odoo-addons-{{ project_slug }}"
+description = "{{ project_name }} Odoo Addons"
 version = "{{ odoo_series }}.1.0.0"
 readme = "README.rst"
 requires-python = "=={{ python_version }}.*"
