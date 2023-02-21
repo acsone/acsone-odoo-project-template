@@ -83,3 +83,7 @@ repos:
       - id: isort
         name: isort except __init__.py
         exclude: /__init__\.py$
+  - repo: https://github.com/sbidoul/pip-split-requirements
+    rev: v0.7.0
+    hooks:
+      - id: pip-split-requirements
