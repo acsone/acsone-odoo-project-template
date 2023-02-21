@@ -3,9 +3,9 @@
 pypdf2<2
 werkzeug<2.1
 odoo @ git+https://github.com/acsone/odoo.git@{{ odoo_series }}-{{ project_trigram }}_master
-{% if odoo_enterprise %}
+{%- if odoo_enterprise %}
 egg=odoo-addons-enterprise @ git+ssh://git@github.com/acsone/enterprise.git@{{ odoo_series }}-{{ project_trigram }}_master
-{% endif %}
+{%- endif %}
 
 # patched ACSONE addons
 # ...

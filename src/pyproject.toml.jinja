@@ -42,10 +42,10 @@ odoo_version_override = "{{ odoo_series }}"
 # Add dependencies that are not declared in Odoo addons manifests.
 dependencies = [
   "click-odoo-contrib",
-  {% if odoo_enterprise -%}
+  {%- if odoo_enterprise %}
   # Odoo enterprise addons
   "odoo-addons-enterprise",
-  {% endif -%}
+  {%- endif %}
   # Addons that don't are not declared in manifests
   "odoo-addon-attachment_s3",
   "odoo-addon-session_db",
