@@ -16,11 +16,6 @@ repos:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
         args: [--addons-dir=odoo/addons]
-  - repo: https://github.com/myint/autoflake
-    rev: v2.0.1
-    hooks:
-      - id: autoflake
-        args: ["-i", "--ignore-init-module-imports"]
   - repo: https://github.com/psf/black
     rev: 23.1.0
     hooks:
@@ -62,21 +57,15 @@ repos:
       - id: check-xml
       - id: mixed-line-ending
         args: ["--fix=lf"]
-  - repo: https://github.com/pycqa/flake8
-    rev: 6.0.0
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: "v0.0.262"
     hooks:
-      - id: flake8
-        additional_dependencies: ["flake8-bugbear==22.9.11"]
+      - id: ruff
   - repo: https://github.com/OCA/pylint-odoo
     rev: 7.0.5
     hooks:
       - id: pylint_odoo
         files: odoo/addons/
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.1
-    hooks:
-      - id: pyupgrade
-        args: ["--py{{ python_version|replace('.', '') }}-plus"]
   - repo: https://github.com/pycqa/isort
     rev: 5.12.0
     hooks:

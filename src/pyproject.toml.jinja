@@ -72,3 +72,28 @@ match_any_tag = true
 provider = "github.com"
 owner = "acsone"
 default = true
+
+
+[tool.ruff]
+target-version = "py{{ python_version|replace('.', '') }}"
+fix = true
+# https://beta.ruff.rs/docs/rules/
+select = [
+  "F", # Pyflakes
+  "E", # pycodestyle errors
+  "W", # pycodestyle warnings
+  "B", # flake8-bugbear
+  "C90", # mccabe
+  "UP", # pyupgrade
+  "C4", # flake8-comprehensions
+  "T10", # flake8-debugger
+]
+ignore = [
+  "E501", # line too long (covered by B950)
+  "E741", # Ambiguous variable name 'l'
+]
+ignore-init-module-imports = true
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]  # ignore unused imports in __init__.py
+"__manifest__.py" = ["B018"]  # useless expression
