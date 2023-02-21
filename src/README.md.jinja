@@ -1,0 +1,77 @@
+# Odoo {{ project_name|capitalize }}
+
+.. contents::
+
+## Development environment howto
+
+### Development requirements
+
+- Install [pip-deepfreeze](https://pypi.python.org/pypi/pip-deepfreeze) with ``pipx install pip-deepfreeze``
+- Install [pip-split-requirements](https://pypi.python.org/pypi/pip-split-requirements) with ``pipx install pip-split-requirements``
+- Install [pip-preserve-requirements](https://pypi.python.org/pypi/pip-preserve-requirements) with ``pipx install pip-preserve-requirements``
+- Install [bump2version](https://pypi.python.org/pypi/bump2version) with ``pipx install bump2version``
+- To save some time it is recommended to install [git-autoshare](https://pypi.python.org/pypi/git-autoshare) with ``pipx install
+  git-autoshare``. Don't forget to configure it according to the documentation.
+- [git-aggregator](https://pypi.python.org/pypi/git-aggregator) (``pipx install git-aggregator``) is also occasionally useful to
+  combine multiple pull requests into a single branch (see ``gitaggregate.yaml``).
+
+### Initialize virtualenv
+
+- Create and activate virtualenv, possibly with virtualenvwrapper's
+  `mkvirtualenv odoo-alcyon -a . --python=$(which python2)`
+
+### Install everything
+
+Some dependencies are not available on Pypi as manylinux wheels, so you need
+to have a C compiler,the Python headers and some additional dev
+packages installed in order to compile them. The list of packages can be
+found in the [Dockerfile](https://gitlab.acsone.eu/acsone/odoo-alcyon/-/blob/master/Dockerfile#L32-38)
+
+As an alternative, you can reference the wheelhouse from ACSONE in the pip
+environment variable before launching the pip-df command::
+
+   export PIP_FIND_LINKS=https://wheelhouse.acsone.eu/manylinux1
+
+In an activated python 3.10 virtualenv, run::
+
+   pip-df sync
+
+When dependencies change, use `pip-df sync` again, possibly with
+`--update`. Add unmerged VCS dependencies in `requirements.txt.in`. See the
+pip-deepfreeze documentation for more information.
+
+### Develop
+
+This project uses [black](https://pypi.org/project/black) and other code formatters.
+To make sure local coding convention are respected before
+you commit, install [pre-commit](https://pypi.org/project/pre-commit) and
+run `pre-commit install` after cloning the repository.
+
+## Run
+
+```
+odoo -c odoo.cfg
+```
+
+## Running tests
+
+To run tests as usual
+
+```
+odoo --test-enable
+```
+
+To run tests with pytest Odoo
+
+```
+pytest --odoo-database=<dbname> odoo/addons
+```
+
+## Release
+
+1. First make sure you have been testing using the correct dependencies by
+   running `pip-df sync` and checking there is no change in `requirements*.txt`.
+2. Update the version number using `bumpversion patch|minor|major` and push the tag
+   that bumpversion created with `git push --tags`.
+2. The deploy to the test environment will be automatic, and GitLab will show buttons
+   on the pipeline to deploy to other environments.

@@ -1,0 +1,22 @@
+# Copyright 2020 ACSONE SA/NV (<http://acsone.eu>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+{
+    "name": "{{ project_name|capitalize }}",
+    "description": """
+        Odoo aplication for {{ project_name|capitalize }}""",
+    "author": "ACSONE SA/NV",
+    "website": "https://acsone.eu",
+    "category": "{{ project_name }}",
+    "version": "{{ odoo_series }}.1.0.0",
+    "license": "AGPL-3",
+    "depends": [
+        # {{ project_name }} open source addons
+        # !!! no odoo enterprise addons dependencies !!!
+        # OCA
+        "mail_environment",
+        "server_environment_ir_config_parameter",
+        "web_environment_ribbon",
+    ],
+    "data": [],
+    "application": True,
+}

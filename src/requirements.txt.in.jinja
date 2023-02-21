@@ -1,0 +1,16 @@
+--find-links https://wheelhouse.acsone.eu/manylinux2014
+
+# odoo
+# -r https://raw.githubusercontent.com/odoo/odoo/{{ odoo_series }}/requirements.txt
+pypdf2<2
+werkzeug<2.1
+odoo @ git+https://github.com/acsone/odoo.git@{{ odoo_series }}-{{ project_trigram }}_master
+{% if odoo_enterprise %}
+egg=odoo-addons-enterprise @ git+ssh://git@github.com/acsone/enterprise.git@{{ odoo_series }}-{{ project_trigram }}_master
+{% endif %}
+
+# patched ACSONE addons
+# ...
+
+# patched OCA addons
+# odoo-addon-{addon} @ git+https://github.com/OCA/{oca-project}.git@refs/pull/NNN/head#subdirectory=setup/{addon}

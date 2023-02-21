@@ -1,0 +1,35 @@
+# Configure jinja2 defaults to make syntax highlighters happy
+_templates_suffix: .jinja
+_subdirectory: src
+_envops:
+  block_end_string: "%}"
+  block_start_string: "{%"
+  comment_end_string: "#}"
+  comment_start_string: "{#"
+  keep_trailing_newline: true
+  variable_end_string: "}}"
+  variable_start_string: "{{"
+
+project_name:
+  type: str
+  help: The project name (lowercase, without Odoo)
+
+project_trigram:
+  type: str
+  help: A very short name for the project (3 to 5 lowercase characters)
+
+odoo_series:
+  type: str
+  default: "16.0"
+  choices:
+    - "16.0"
+
+odoo_enterprise:
+  type: bool
+  default: False
+
+python_version:
+  type: short
+  default: "3.10"
+  choices:
+    - "3.10"

@@ -1,0 +1,200 @@
+# /!\ pin refs when project enters maintenance phase.
+include:
+  - project: acsone/gitlab-ci-templates
+    file: pre-commit.yml
+    ref: master
+  - project: acsone/gitlab-ci-templates
+    file: push-pot.yml
+    ref: master
+  - project: acsone/gitlab-ci-templates
+    file: build-publish-image-buildkit.yml
+    ref: master
+  - project: acsone/gitlab-ci-templates
+    file: python-coverage-report.yml
+    ref: master
+
+variables:
+  TRIGRAM: {{ project_trigram }}
+
+pre-commit:
+  extends: .pre-commit
+  variables:
+    ACIT_PYTHON_IMAGE: "python:{{ python_version }}"
+
+.test_common:
+  variables:
+    FF_KUBERNETES_HONOR_ENTRYPOINT: 1 # we want the odoo-bedrock image entrypoint to run
+    NOGOSU: 1 # In order to run test as root. So pip install -e . can write to the venv
+    DB_HOST: $PGHOST
+    DB_USER: $PGUSER
+    DB_PASSWORD: $PGPASSWORD
+    DB_NAME: "${CI_PROJECT_NAME}-${CI_JOB_ID}"
+  image: ${CI_REGISTRY_IMAGE}/dependencies:${CI_COMMIT_SHA}
+  interruptible: true
+  needs:
+    - job: build-dependencies-image
+
+license_check:
+  extends: .test_common
+  tags:
+    - generic
+  script:
+    - manifestoo -d odoo/addons check-licenses
+
+dev_status_check:
+  extends: .test_common
+  tags:
+    - generic
+  script:
+    - manifestoo -d odoo/addons check-dev-status --default-dev-status=Beta
+
+test:
+  extends: .test_common
+  tags:
+    - postgres
+  script:
+    - pip install -e .
+    - python -m venv /tmp/acsoo-env && /tmp/acsoo-env/bin/pip install acsoo
+    - ADDONS_INIT=$(manifestoo -d odoo/addons list-depends --separator=,)
+    - echo Installing dependent addons ${ADDONS_INIT}
+    - unbuffer click-odoo-initdb -c odoo-ci.cfg --new-database ${DB_NAME} --cache-prefix $TRIGRAM -m ${ADDONS_INIT} | /tmp/acsoo-env/bin/acsoo checklog
+    - ADDONS_TEST=$(manifestoo -d odoo/addons list --separator=,)
+    - echo Installing project addons ${ADDONS_TEST}
+    - unbuffer coverage run  /odoo/bin/odoo -c odoo-ci.cfg -d ${DB_NAME} --stop-after-init -i ${ADDONS_TEST} | /tmp/acsoo-env/bin/acsoo checklog
+    - echo Testing project addons ${ADDONS_TEST}
+    - unbuffer coverage run /odoo/bin/odoo -c odoo-ci.cfg -d ${DB_NAME} --stop-after-init --test-tags ${ADDONS_TEST} --test-enable | /tmp/acsoo-env/bin/acsoo checklog
+    - if [ "${CI_COMMIT_REF_NAME}" = "master" ] ; then click-odoo-makepot -c odoo-ci.cfg -d ${DB_NAME} --msgmerge --addons-dir=odoo/addons ; fi
+  after_script:
+    - dropdb --if-exists ${DB_NAME}
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - odoo/addons/**/*.pot
+      - .coverage.*
+
+coverage:
+  extends: .python-coverage-report
+  needs:
+    - job: test
+      artifacts: true
+
+push-pot:
+  extends: .push-pot
+  variables:
+    ACIT_SSH_KEY: $SSH_DEPLOY_KEY
+  needs:
+    - job: test
+      artifacts: true
+
+# build container images
+
+.build-publish-image:
+  extends: .build-publish-image-buildkit
+  variables:
+    ACIT_SSH_KEY: $SSH_DEPLOY_KEY
+
+build-dependencies-image:
+  extends: .build-publish-image
+  variables:
+    ACIT_IMAGE_BUILD_TARGET: dependencies
+    ACIT_IMAGE_FLAVOR: /dependencies
+    ACIT_IMAGE_TAG: $CI_COMMIT_SHA
+
+build-review-image:
+  extends: .build-publish-image
+  variables:
+    ACIT_IMAGE_FLAVOR: /review
+  only:
+    - branches
+  except:
+    - master
+  when: manual
+
+build-test-image:
+  extends: .build-publish-image
+  variables:
+    ACIT_IMAGE_FLAVOR: /test
+  only:
+    - /^\d+\.\d+\.\d+$/
+
+build-uat-image:
+  extends: .build-publish-image
+  variables:
+    ACIT_IMAGE_FLAVOR: /uat
+  only:
+    - /^\d+\.\d+\.\d+$/
+  when: manual
+
+build-prod-image:
+  extends: .build-publish-image
+  variables:
+    ACIT_IMAGE_FLAVOR: /prod
+  only:
+    - /^\d+\.\d+\.\d+$/
+  when: manual
+
+# deployments
+
+.deploy-trigger:
+  tags:
+    - generic
+  image: ghcr.io/acsone/deploy-tools
+  script:
+    - echo "triggering deploy of ${CI_REGISTRY_IMAGE}${IMAGE_FLAVOR}:${CI_COMMIT_REF_NAME} to ${CI_ENVIRONMENT_NAME}"
+    - |
+      curl --request POST \
+        --form "token=${CI_JOB_TOKEN}" \
+        --form "ref=${DEPLOY_BRANCH}" \
+        --form "variables[DEPLOY_ENV]=${CI_ENVIRONMENT_NAME}" \
+        --form "variables[DEPLOY_IMAGE]=${CI_REGISTRY_IMAGE}${IMAGE_FLAVOR}" \
+        --form "variables[DEPLOY_COMMIT_REF_NAME]=${CI_COMMIT_REF_NAME}" \
+        --form "variables[DEPLOY_COMMIT_SHA]=${CI_COMMIT_SHA}" \
+        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/trigger/pipeline"
+
+deploy-review-trigger:
+  extends: .deploy-trigger
+  variables:
+    DEPLOY_BRANCH: deploy-test
+    IMAGE_FLAVOR: /review
+  needs:
+    - job: build-review-image
+  only:
+    - branches
+  except:
+    - master
+
+deploy-test-trigger:
+  extends: .deploy-trigger
+  variables:
+    DEPLOY_BRANCH: deploy-test
+    IMAGE_FLAVOR: /test
+  environment:
+    name: test
+  needs:
+    - job: build-test-image
+  only:
+    - /^\d+\.\d+\.\d+$/
+
+deploy-uat-trigger:
+  extends: .deploy-trigger
+  variables:
+    DEPLOY_BRANCH: deploy-test
+    IMAGE_FLAVOR: /uat
+  environment:
+    name: uat
+  needs:
+    - job: build-uat-image
+  only:
+    - /^\d+\.\d+\.\d+$/
+
+deploy-prod-trigger:
+  extends: .deploy-trigger
+  variables:
+    DEPLOY_BRANCH: deploy-prod
+    IMAGE_FLAVOR: /prod
+  environment:
+    name: prod
+  needs:
+    - job: build-prod-image
+  only:
+    - /^\d+\.\d+\.\d+$/
