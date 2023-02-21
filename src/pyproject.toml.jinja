@@ -52,3 +52,30 @@ dependencies = [
   "xlrd",
 ]
 addons_dirs = ["odoo/addons"]
+
+[tool.pip-deepfreeze.sync]
+extras = "test,dev"
+post_sync_commands = [
+  "pip-preserve-requirements requirements*.txt",
+  "pip-split-requirements",
+]
+
+[tool.pip-split-requirements]
+group_specs = [
+  "odoo:^(odoo|odoo-addons-enterprise)\\s*@",
+  "odoo-addons:odoo-addon",
+]
+requirements_files = [
+  "requirements.txt",
+  "requirements-test.txt"
+]
+prefix = "container/requirements-group"
+
+[tool.pip-preserve-requirements]
+tag_prefix = "{{ project_trigram }}{{ odoo_series|replace('.', '' }}-"
+match_any_tag = true
+
+[[tool.pip-preserve-requirements.vcs_vaults]]
+provider = "github.com"
+owner = "acsone"
+default = true

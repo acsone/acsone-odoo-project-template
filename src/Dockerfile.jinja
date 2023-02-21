@@ -8,7 +8,6 @@ FROM ghcr.io/acsone/odoo-bedrock:{{ odoo_series }}-py{{ python_version|replace('
 
 # Install apt runtime dependencies.
 # - postgresql-client for comfort in the shell container and for db dump to work
-# - ghostscript for pdf-a conversion
 # - expect to have unbuffer in CI
 # - gettext for click-odoo-makepot in CI
 RUN set -e \
@@ -16,7 +15,6 @@ RUN set -e \
   && apt -y install --no-install-recommends \
        postgresql-client \
        expect \
-       ghostscript \
        gettext \
   && apt -y clean \
   && rm -rf /var/lib/apt/lists/*
