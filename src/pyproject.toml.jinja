@@ -17,7 +17,8 @@ dynamic = ["dependencies"]
 [project.optional-dependencies]
 test = [
   "coverage",
-  "pygments",
+  "pygments",  # to silence Odoo warning which uses pygments for README.rst rendering
+  "manifestoo",
 ]
 doc = []
 dev = [
