@@ -1,8 +1,21 @@
-exclude: "^(?!odoo/)|.pot$|.po$"
+exclude: |
+  (?x)
+  .pot$|
+  .po$|
+  ^.gitlab|
+  # NOT INSTALLABLE ADDONS
+  # END NOT INSTALLABLE ADDONS
+  ^LICENCE
 default_language_version:
   python: python3
   node: "16.17.0"
 repos:
+  - repo: https://github.com/oca/maintainer-tools
+    rev: a24deac77aff2f3c968b3b4c269d6aec91a379da
+    hooks:
+      # update the NOT INSTALLABLE ADDONS section above
+      - id: oca-update-pre-commit-excluded-addons
+        args: [--addons-dir=odoo/addons]
   - repo: https://github.com/myint/autoflake
     rev: v1.6.0
     hooks:
@@ -63,9 +76,9 @@ repos:
     rev: v2.38.0
     hooks:
       - id: pyupgrade
-        args: ["--py38-plus"]
+        args: ["--py{{ python_version|replace('.', '') }}-plus"]
   - repo: https://github.com/pycqa/isort
-    rev: 5.10.1
+    rev: 5.12.0
     hooks:
       - id: isort
         name: isort except __init__.py
