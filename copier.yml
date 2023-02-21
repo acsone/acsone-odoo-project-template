@@ -10,13 +10,9 @@ _envops:
   variable_end_string: "}}"
   variable_start_string: "{{"
 
-project_slug:
-  type: str
-  help: Project name, lower case with spaces replaced with dashes.
-
 project_name:
   type: str
-  help: The project name (without Odoo).
+  help: Human readable project name (without Odoo).
 
 project_trigram:
   type: str
