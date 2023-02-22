@@ -1,0 +1,6 @@
+.git/
+src/
+venv/
+.venv/
+tmp/
+release*/
