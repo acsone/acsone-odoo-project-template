@@ -10,22 +10,28 @@
 - Install [pip-split-requirements](https://pypi.python.org/pypi/pip-split-requirements) with ``pipx install pip-split-requirements``
 - Install [pip-preserve-requirements](https://pypi.python.org/pypi/pip-preserve-requirements) with ``pipx install pip-preserve-requirements``
 - Install [bump2version](https://pypi.python.org/pypi/bump2version) with ``pipx install bump2version``
-- To save some time it is recommended to install [git-autoshare](https://pypi.python.org/pypi/git-autoshare) with ``pipx install
-  git-autoshare``. Don't forget to configure it according to the documentation.
 - [git-aggregator](https://pypi.python.org/pypi/git-aggregator) (``pipx install git-aggregator``) is also occasionally useful to
   combine multiple pull requests into a single branch (see ``gitaggregate.yaml``).
+- To make git-aggregate run faster on large repositories such as Odoo, it is recommended to install [git-autoshare](https://pypi.python.org/pypi/git-autoshare) with ``pipx install
+  git-autoshare``. Don't forget to configure it according to the documentation.
+
+### Preliminary steps
+
+- Clone the repository
+- Prepare the project-specific Odoo branch by running `gitaggregate -c gitaggregate.yaml -p`.
+- Pin the build dependencies using for CI by running `./sync-build.sh`
 
 ### Initialize virtualenv
 
 - Create and activate virtualenv, possibly with virtualenvwrapper's
-  `mkvirtualenv odoo-alcyon -a . --python=$(which python2)`
+  `mkvirtualenv odoo-{{ project_name|lower|replace(' ', '-') }} -a . --python=python{{ python_version }}`
 
 ### Install everything
 
-Some dependencies are not available on Pypi as manylinux wheels, so you need
+Some dependencies are not available on PyPI as manylinux wheels, so you need
 to have a C compiler,the Python headers and some additional dev
 packages installed in order to compile them. The list of packages can be
-found in the [Dockerfile](https://gitlab.acsone.eu/acsone/odoo-alcyon/-/blob/master/Dockerfile#L32-38)
+found in the `build-deps` stage of the [Dockerfile](./Dockerfile)
 
 As an alternative, you can reference the wheelhouse from ACSONE in the pip
 environment variable before launching the pip-df command::
