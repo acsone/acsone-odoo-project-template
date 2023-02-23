@@ -102,6 +102,7 @@ build-dependencies-image:
     ACIT_IMAGE_FLAVOR: /dependencies
     ACIT_IMAGE_TAG: $CI_COMMIT_SHA
 
+{%- if review_environments %}
 build-review-image:
   extends: .build-publish-image
   variables:
@@ -111,6 +112,7 @@ build-review-image:
   except:
     - master
   when: manual
+{%- endif %}
 
 build-test-image:
   extends: .build-publish-image
@@ -135,6 +137,7 @@ build-prod-image:
     - /^\d+\.\d+\.\d+$/
   when: manual
 
+{%- if deploy_triggers %}
 # deployments
 
 .deploy-trigger:
@@ -153,6 +156,7 @@ build-prod-image:
         --form "variables[DEPLOY_COMMIT_SHA]=${CI_COMMIT_SHA}" \
         "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/trigger/pipeline"
 
+{%- if review_environments %}
 deploy-review-trigger:
   extends: .deploy-trigger
   variables:
@@ -164,6 +168,7 @@ deploy-review-trigger:
     - branches
   except:
     - master
+{%- endif %}
 
 deploy-test-trigger:
   extends: .deploy-trigger
@@ -200,3 +205,4 @@ deploy-prod-trigger:
     - job: build-prod-image
   only:
     - /^\d+\.\d+\.\d+$/
+{%- endif %}

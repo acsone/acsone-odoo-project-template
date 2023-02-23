@@ -33,3 +33,14 @@ python_version:
   default: "3.10"
   choices:
     - "3.10"
+
+deploy_branch:
+  type: bool
+  default: true
+  help: Generate GitLab CI deployment triggers to a deploy branch.
+
+review_environments:
+  type: bool
+  default:
+  help: Generate GitLab CI review environment (image and deploy triggers).
+  when: "{{ deploy_branch }}"
