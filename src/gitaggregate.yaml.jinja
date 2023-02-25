@@ -1,4 +1,18 @@
+./src/odoo:
+  remotes:
+    odoo: https://github.com/odoo/odoo.git
+    oca: https://github.com/OCA/OCB.git
+    acsone: ssh://git@github.com/acsone/odoo.git
+  merges:
+    - oca {{ odoo_series }}
+  shell_command_after:
+    # pyproject.toml
+    - curl -sSL https://github.com/odoo/odoo/pull/44001.patch | git am
+    # Support python -m odoo, for debugging configuration comfort.
+    - curl -sL https://github.com/odoo/odoo/pull/81864.patch | git am
+  target: acsone {{ odoo_series }}-{{ project_trigram }}_master
 {%- if odoo_enterprise %}
+
 ./src/odoo-addons-enterprise:
   remotes:
     odoo: git@github.com:odoo/enterprise.git
@@ -11,16 +25,3 @@
     - gh --repo acsone/enterprise pr diff {% if odoo_series == "16.0" %}12{% else %}TODO{% endif %} --patch | git am
 
 {%- endif %}
-./src/odoo:
-  remotes:
-    odoo: https://github.com/odoo/odoo.git
-    oca: https://github.com/OCA/OCB.git
-    acsone: ssh://git@github.com/acsone/odoo.git
-  merges:
-     - oca {{ odoo_series }}
-  shell_command_after:
-     # pyproject.toml
-     - curl -sSL https://github.com/odoo/odoo/pull/44001.patch | git am
-     # Support python -m odoo, for debugging configuration comfort.
-     - curl -sL https://github.com/odoo/odoo/pull/81864.patch | git am
-  target: acsone {{ odoo_series }}-{{ project_trigram }}_master
