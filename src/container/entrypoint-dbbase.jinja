@@ -52,7 +52,13 @@ if db_name:
                 ]
             )
         check_call(
-            ["click-odoo-update", "--if-exists", "-d", database, "--i18n-overwrite"]
+            [
+                "click-odoo-update",
+                "--if-exists",
+                "-d",
+                database,
+                "--i18n-overwrite",
+            ]
         )
 
 while subprocess.call(["wkhtmltopdf", "--version"]) != 0:
