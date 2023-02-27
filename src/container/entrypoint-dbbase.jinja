@@ -37,8 +37,9 @@ if db_name:
                 "--unless-exists",
                 "-n",
                 database,
-                "--cache-prefix",
-                "{{ project_trigram }}",
+                "--no-cache",
+                "-m",
+                "attachment_s3,server_environment_ir_config_parameter",
             ]
         )
         if running_env != "prod":
