@@ -37,8 +37,9 @@ if db_name:
                 "--unless-exists",
                 "-n",
                 database,
-                "--cache-prefix",
-                "{{ project_trigram }}",
+                "--no-cache",
+                "-m",
+                "attachment_s3,server_environment_ir_config_parameter",
             ]
         )
         if running_env != "prod":
@@ -51,7 +52,13 @@ if db_name:
                 ]
             )
         check_call(
-            ["click-odoo-update", "--if-exists", "-d", database, "--i18n-overwrite"]
+            [
+                "click-odoo-update",
+                "--if-exists",
+                "-d",
+                database,
+                "--i18n-overwrite",
+            ]
         )
 
 while subprocess.call(["wkhtmltopdf", "--version"]) != 0:
