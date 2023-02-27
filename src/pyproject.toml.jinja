@@ -52,7 +52,8 @@ dependencies = [
   "freezegun",
   "num2words",
   "pdfminer",
-  "xlrd",
+  # xlrd<2 because Odoo relies on it to import xlsx files and xlrd 2 dropped that capability
+  "xlrd<2",
 ]
 addons_dirs = ["odoo/addons"]
 
