@@ -1,7 +1,7 @@
 ### Issues
+
 - [ ] fixes #
 
-/label ~"work in progress"
-/milestone %1.0
+/assign me
+/draft
 /target_branch master
-/wip
