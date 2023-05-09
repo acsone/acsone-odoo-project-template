@@ -12,5 +12,5 @@ if [ -f requirements-build.txt ] ; then
 else
     CONTRAINTS=""
 fi
-pip install -r requirements-build.txt.in $CONTRAINTS
+pip install -U -r requirements-build.txt.in $CONTRAINTS
 pip freeze --all | grep -v "^pip==" > requirements-build.txt
