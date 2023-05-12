@@ -89,6 +89,6 @@ pytest --odoo-database=<dbname> odoo/addons
 1. First make sure you have been testing using the correct dependencies by
    running `pip-df sync` and checking there is no change in `requirements*.txt`.
 2. Update the version number using `bumpversion patch|minor|major` and push the tag
-   that bumpversion created with `git push && git push --tags`.
+   that bumpversion created with `git push --follow-tags`.
 3. The deploy to the test environment will be automatic, and GitLab will show buttons
    on the pipeline to deploy to other environments.
