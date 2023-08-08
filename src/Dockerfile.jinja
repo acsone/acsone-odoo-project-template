@@ -31,7 +31,7 @@ RUN set -e \
   && apt -y install --no-install-recommends \
        git \
        openssh-client \
-       python3.10-dev \
+       python{{ python_version }}-dev \
        build-essential \
        libpq-dev \
   && apt -y clean \
