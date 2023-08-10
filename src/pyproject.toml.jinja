@@ -77,7 +77,7 @@ requirements_files = [
 prefix = "container/requirements-group"
 
 [tool.pip-preserve-requirements]
-tag_prefix = "{{ project_trigram }}{{ odoo_series|replace('.', '') }}-"
+tag_prefix = "{{ odoo_series }}+{{ project_trigram }}+"
 match_any_tag = true
 
 [[tool.pip-preserve-requirements.vcs_vaults]]
