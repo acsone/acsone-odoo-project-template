@@ -61,20 +61,30 @@ RUN pip wheel --only-binary=:all: --no-deps --wheel-dir=/build-deps -r /build-de
 # --no-deps is to make sure we have pinned them all
 #
 
+FROM python:3.11-slim as split-requirements
+RUN pip install "pip-split-requirements>=0.7"
+WORKDIR /reqs/
+COPY requirements*.txt /reqs/
+RUN pip-split-requirements \
+    --group-spec="odoo:^(odoo|odoo-addons-enterprise)\s*@" \
+    --group-spec="odoo-addons:odoo-addon" \
+    --prefix="requirements-group" \
+    requirements.txt requirements-test.txt
+
 FROM build-deps as build-odoo
-COPY container/requirements-group-odoo.txt /build/reqs.txt
+COPY --from=split-requirements /reqs/requirements-group-odoo.txt /build/reqs.txt
 RUN --mount=type=ssh \
     --mount=type=cache,target=/root/.cache/pip \
     pip wheel --no-deps --wheel-dir=/build -r /build/reqs.txt
 
 FROM build-deps as build-odoo-addons
-COPY container/requirements-group-odoo-addons.txt /build/reqs.txt
+COPY --from=split-requirements /reqs/requirements-group-odoo-addons.txt /build/reqs.txt
 RUN --mount=type=ssh \
     --mount=type=cache,target=/root/.cache/pip \
     pip wheel --no-deps --wheel-dir=/build -r /build/reqs.txt
 
 FROM build-deps as build-other
-COPY container/requirements-group-other.txt /build/reqs.txt
+COPY --from=split-requirements /reqs/requirements-group-other.txt /build/reqs.txt
 RUN --mount=type=ssh \
     --mount=type=cache,target=/root/.cache/pip \
     pip wheel --no-deps --wheel-dir=/build -r /build/reqs.txt
