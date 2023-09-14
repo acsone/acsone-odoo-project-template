@@ -16,6 +16,7 @@ RUN set -e \
        postgresql-client \
        expect \
        gettext \
+       libxmlsec1-openssl \
   && apt -y clean \
   && rm -rf /var/lib/apt/lists/*
 
@@ -35,6 +36,7 @@ RUN set -e \
        python{{ python_version }}-dev \
        build-essential \
        libpq-dev \
+       pkg-config libxml2-dev libxmlsec1-dev \
   && apt -y clean \
   && rm -rf /var/lib/apt/lists/*
 
