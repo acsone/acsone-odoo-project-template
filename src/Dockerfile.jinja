@@ -99,10 +99,10 @@ FROM base as dependencies
 # Install python dependencies we built in the build stage.
 # Use --no-deps and --no-index to be sure to not download anything else.
 
-RUN --mount=type=bind,target=/build,source=/build,from=build-other \
+RUN --mount=type=bind,target=/build,source=/build,from=build-odoo \
   pip install --no-deps --no-index /build/*.whl
 
-RUN --mount=type=bind,target=/build,source=/build,from=build-odoo \
+RUN --mount=type=bind,target=/build,source=/build,from=build-other \
   pip install --no-deps --no-index /build/*.whl
 
 RUN --mount=type=bind,target=/build,source=/build,from=build-odoo-addons \
