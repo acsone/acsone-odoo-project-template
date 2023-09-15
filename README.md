@@ -24,7 +24,7 @@ project inside it.
 
 ### Updating an existing project
 
-Inside the project root, run `copier -f update`, or `copier update` if you want to
+Inside the project root, run `pipx run copier update  -f`, or `pipx run copier update` if you want to
 change the answers to some questions.
 
 ## How to use the generated project
