@@ -58,6 +58,8 @@ dependencies = [
 ]
 addons_dirs = ["odoo/addons"]
 
+# pip-deepfreeze
+
 [tool.pip-deepfreeze.sync]
 extras = "test,dev"
 post_sync_commands = [
@@ -73,27 +75,37 @@ provider = "github.com"
 owner = "acsone"
 default = true
 
+# ruff
 
 [tool.ruff]
-target-version = "py{{ python_version|replace('.', '') }}"
+target-version = "py{{ python_version | replace('.', '') }}"
 fix = true
 # https://beta.ruff.rs/docs/rules/
 select = [
-  "F", # Pyflakes
-  "E", # pycodestyle errors
-  "W", # pycodestyle warnings
   "B", # flake8-bugbear
-  "C90", # mccabe
-  "UP", # pyupgrade
   "C4", # flake8-comprehensions
+  "C90", # mccabe
+  "E", # pycodestyle errors
+  "F", # Pyflakes
+  "I", # isort
+  "RUF", # ruff specific rules
   "T10", # flake8-debugger
+  "UP", # pyupgrade
+  "UP", # pyupgrade
+  "W", # pycodestyle warnings
 ]
 ignore = [
   "E501", # line too long (covered by B950)
-  "E741", # Ambiguous variable name 'l'
 ]
 ignore-init-module-imports = true
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401"]  # ignore unused imports in __init__.py
 "__manifest__.py" = ["B018"]  # useless expression
+
+[tool.ruff.isort]
+section-order = ["future", "standard-library", "third-party", "odoo", "odoo-addons", "first-party", "local-folder"]
+
+[tool.ruff.isort.sections]
+"odoo" = ["odoo"]
+"odoo-addons" = ["odoo.addons"]
