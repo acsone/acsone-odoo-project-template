@@ -100,7 +100,7 @@ ignore = [
 ignore-init-module-imports = true
 
 [tool.ruff.per-file-ignores]
-"__init__.py" = ["F401"]  # ignore unused imports in __init__.py
+"__init__.py" = ["F401", "I001"]  # ignore unused and unsorted imports in __init__.py 
 "__manifest__.py" = ["B018"]  # useless expression
 
 [tool.ruff.isort]
