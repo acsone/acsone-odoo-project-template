@@ -33,6 +33,7 @@ python_version:
   default: "3.10"
   choices:
     - "3.10"
+    - "3.11"
 
 deploy_branch:
   type: bool
