@@ -42,6 +42,6 @@ deploy_branch:
 
 review_environments:
   type: bool
-  default:
+  default: true
   help: Generate GitLab CI review environment (image and deploy triggers).
   when: "{{ deploy_branch }}"
