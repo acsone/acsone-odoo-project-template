@@ -12,6 +12,7 @@
     <field name="directory_path">odoo-{{ project_name | lower }}-prod</field>
     <field name="eval_options_from_env" eval="True" />
     <field name="use_filename_obfuscation" eval="True" />
+    <field name="optimizes_directory_path" eval="True" />
     <field name="options">
       {
         "endpoint_url": "$AWS_ENDPOINT_URL",
@@ -33,6 +34,7 @@
     <field name="directory_path">odoo-{{ project_name | lower }}-uat</field>
     <field name="eval_options_from_env" eval="True" />
     <field name="use_filename_obfuscation" eval="True" />
+    <field name="optimizes_directory_path" eval="True" />
     <field name="options">
       {
         "endpoint_url": "$AWS_ENDPOINT_URL",
@@ -54,6 +56,7 @@
     <field name="directory_path">odoo-{{ project_name | lower }}-test</field>
     <field name="eval_options_from_env" eval="True" />
     <field name="use_filename_obfuscation" eval="True" />
+    <field name="optimizes_directory_path" eval="True" />
     <field name="options">
       {
         "endpoint_url": "$AWS_ENDPOINT_URL",
