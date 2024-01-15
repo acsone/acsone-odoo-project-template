@@ -121,6 +121,7 @@ FROM dependencies as runtime
 # Here we don't use --no-deps but we do use --no-index to be sure that all dependencies
 # have been installed before (i.e. they have been pinned in requirements.txt).
 COPY . /app
+RUN python -m compileall /app/odoo /app/odoo_{{ project_name|lower|replace(' ', '_') }}
 RUN --mount=type=bind,target=/build-deps,source=/build-deps,from=build-deps \
   --mount=type=cache,target=/root/.cache/pip \
   pip install --no-index --find-links /build-deps --editable /app
