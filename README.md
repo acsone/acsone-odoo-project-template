@@ -11,13 +11,9 @@ free to draw inspiration. Feedback is welcome in
 
 ## How to use this template
 
-### Prerequisites
-
-`pipx install copier`
-
 ### Initializing a new project
 
-`copier copy git+https://github.com/acsone/acsone-odoo-project-template {project-root-dir}`
+`pipx run copier copy git+https://github.com/acsone/acsone-odoo-project-template {project-root-dir}`
 
 This will ask questions and create the `{project-root-dir}` directory and initialize the
 project inside it.
