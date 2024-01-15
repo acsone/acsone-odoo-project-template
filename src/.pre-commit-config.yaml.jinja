@@ -21,15 +21,13 @@ repos:
     hooks:
       - id: black
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0-alpha.4
+    rev: v3.0.3
     hooks:
       - id: prettier
         name: prettier + plugin-xml
         additional_dependencies:
-          - "prettier@2.1.2"
-          - "@prettier/plugin-xml@0.12.0"
-        args:
-          - --plugin=@prettier/plugin-xml
+          - "prettier@3.0.3"
+          - "@prettier/plugin-xml@3.2.2"
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v8.34.0
     hooks:
