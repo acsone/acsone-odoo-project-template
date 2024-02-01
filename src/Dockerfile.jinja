@@ -4,7 +4,7 @@
 # base stage, with the non-python runtime dependencies
 #
 
-FROM ghcr.io/acsone/odoo-bedrock:{{ odoo_series }}-py{{ python_version|replace('.', '') }}-latest as base
+FROM ghcr.io/acsone/odoo-bedrock:{{ odoo_series }}-py{{ python_version|replace('.', '') }}-jammy-latest as base
 
 # Install apt runtime dependencies.
 # - postgresql-client for comfort in the shell container and for db dump to work
