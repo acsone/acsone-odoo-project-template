@@ -11,6 +11,15 @@ def check_call(cmd):
     subprocess.check_call(cmd)
 
 
+# wait for postgres to be ready
+sleep = 1
+while sleep < 64:
+    if subprocess.call(["pg_isready"]) == 0:
+        break
+    print("Waiting for postgres...")
+    time.sleep(sleep)
+    sleep = sleep * 2
+
 db_name = os.getenv("DB_NAME")
 db_base = os.getenv("DB_BASE")
 
