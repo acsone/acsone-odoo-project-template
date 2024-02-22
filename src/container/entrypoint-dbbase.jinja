@@ -61,6 +61,11 @@ if db_name:
             ]
         )
 
-while subprocess.call(["wkhtmltopdf", "--version"]) != 0:
+# wait for wkhtmltopdf to be ready
+sleep = 1
+while sleep < 64:
+    if subprocess.call(["wkhtmltopdf", "--version"]) == 0:
+        break
     print("Waiting for wkhtmltopdf...")
-    time.sleep(10)
+    time.sleep(sleep)
+    sleep = sleep * 2
