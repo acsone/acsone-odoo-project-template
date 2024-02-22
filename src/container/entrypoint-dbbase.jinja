@@ -19,6 +19,8 @@ while sleep < 64:
     print("Waiting for postgres...")
     time.sleep(sleep)
     sleep = sleep * 2
+else:
+    raise SystemExit("postgres is not ready, giving up")
 
 db_name = os.getenv("DB_NAME")
 db_base = os.getenv("DB_BASE")
@@ -78,3 +80,5 @@ while sleep < 64:
     print("Waiting for wkhtmltopdf...")
     time.sleep(sleep)
     sleep = sleep * 2
+else:
+    raise SystemExit("wkhtmltopdf is not ready, giving up")
