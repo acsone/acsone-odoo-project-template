@@ -35,6 +35,11 @@ python_version:
     - "3.10"
     - "3.11"
 
+kwkhtmltopdf_test_service:
+  type: bool
+  default: false
+  help: "Enable the kwkhtmltopdf service in CI tests."
+
 deploy_branch:
   type: bool
   default: true

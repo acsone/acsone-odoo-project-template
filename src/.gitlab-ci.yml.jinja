@@ -50,6 +50,13 @@ dev_status_check:
 
 test:
   extends: .test_common
+  {%- if kwkhtmltopdf_test_service %}
+    services:
+      - name: ghcr.io/acsone/kwkhtmltopdf:0.12.5-latest
+        alias: kwkhtmltopdf
+  variables:
+    KWKHTMLTOPDF_SERVER_URL: http://kwkhtmltopdf:8080
+  {%- endif %}
   tags:
     - postgres
   script:
