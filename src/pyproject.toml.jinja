@@ -60,7 +60,9 @@ dependencies = [
 ]
 addons_dirs = ["odoo/addons"]
 
-# pip-deepfreeze
+#####################################################################################
+# pip-deepfreeze and post-sync commands
+#
 
 [tool.pip-deepfreeze]
 min_version = "2.0"
@@ -80,7 +82,9 @@ provider = "github.com"
 owner = "acsone"
 default = true
 
+#####################################################################################
 # ruff
+#
 
 [tool.ruff]
 target-version = "py{{ python_version | replace('.', '') }}"
