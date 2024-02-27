@@ -11,6 +11,17 @@ def check_call(cmd):
     subprocess.check_call(cmd)
 
 
+# wait for postgres to be ready
+sleep = 1
+while sleep < 64:
+    if subprocess.call(["pg_isready"]) == 0:
+        break
+    print("Waiting for postgres...")
+    time.sleep(sleep)
+    sleep = sleep * 2
+else:
+    raise SystemExit("postgres is not ready, giving up")
+
 db_name = os.getenv("DB_NAME")
 db_base = os.getenv("DB_BASE")
 
@@ -39,7 +50,7 @@ if db_name:
                 database,
                 "--no-cache",
                 "-m",
-                "attachment_s3,server_environment_ir_config_parameter",
+                "fs_attachment,server_environment_ir_config_parameter",
             ]
         )
         if running_env != "prod":
@@ -61,6 +72,13 @@ if db_name:
             ]
         )
 
-while subprocess.call(["wkhtmltopdf", "--version"]) != 0:
+# wait for wkhtmltopdf to be ready
+sleep = 1
+while sleep < 64:
+    if subprocess.call(["wkhtmltopdf", "--version"]) == 0:
+        break
     print("Waiting for wkhtmltopdf...")
-    time.sleep(10)
+    time.sleep(sleep)
+    sleep = sleep * 2
+else:
+    raise SystemExit("wkhtmltopdf is not ready, giving up")
