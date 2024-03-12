@@ -22,6 +22,7 @@ odoo_series:
   type: str
   default: "16.0"
   choices:
+    - "17.0"
     - "16.0"
 
 odoo_enterprise:
