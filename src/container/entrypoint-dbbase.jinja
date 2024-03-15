@@ -50,7 +50,7 @@ if db_name:
                 database,
                 "--no-cache",
                 "-m",
-                "fs_attachment,server_environment_ir_config_parameter",
+                "{{ project_trigram }}_fs_attachment,server_environment_ir_config_parameter",
             ]
         )
         if running_env != "prod":
