@@ -76,3 +76,7 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# mise-en-place
+.mise.local.toml
+.mise.*.local.toml
