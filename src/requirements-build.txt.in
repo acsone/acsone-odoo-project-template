@@ -1,5 +1,6 @@
 # build dependencies for building the project and all its dependencies
 # that need to be built from sources
+editables
 hatchling
 hatch-odoo
 setuptools
