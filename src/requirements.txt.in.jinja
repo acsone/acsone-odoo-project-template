@@ -11,4 +11,8 @@ odoo-addons-enterprise @ git+ssh://git@github.com/acsone/enterprise.git@{{ odoo_
 # ...
 
 # patched OCA addons
+{%- if odoo_series == "16.0" %}
 # odoo-addon-{addon} @ git+https://github.com/OCA/{oca-project}.git@refs/pull/NNN/head#subdirectory=setup/{addon}
+{%- else %}
+# odoo-addon-{addon} @ git+https://github.com/OCA/{oca-project}.git@refs/pull/NNN/head#subdirectory={addon}
+{%- endif %}
