@@ -20,10 +20,11 @@ project_trigram:
 
 odoo_series:
   type: str
-  default: "16.0"
+  default: "18.0"
   choices:
-    - "17.0"
     - "16.0"
+    - "17.0"
+    - "18.0"
 
 odoo_enterprise:
   type: bool
@@ -31,10 +32,11 @@ odoo_enterprise:
 
 python_version:
   type: str
-  default: "3.10"
+  default: "3.12"
   choices:
     - "3.10"
     - "3.11"
+    - "3.12"
 
 kwkhtmltopdf_test_service:
   type: bool
