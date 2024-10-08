@@ -52,12 +52,30 @@ dependencies = [
   "odoo-addon-session_db",
   # Optional Odoo dependencies not in Odoo's setup.py
   "freezegun",
-  "reportlab<4",
+  "lxml[html_clean]",
   "num2words",
   "pdfminer",
+  "phonenumbers",
+  "python-slugify[unidecode]",
+  {%- if odoo_series == "18.0" %}
+  "packaging",  # https://github.com/odoo/odoo/pull/181768
+  {%- endif %}
+  # Constraints
+  {%- if odoo_series == "16.0" %}
   "pypdf2<3",
-  # xlrd<2 because Odoo relies on it to import xlsx files and xlrd 2 dropped that capability
-  "xlrd<2",
+  "setuptools<71", # https://github.com/pypa/setuptools/issues/4516
+  "werkzeug==2.0.*",
+  "xlrd<2",  # for xlsx support
+  {%- elif odoo_series == "17.0" %}
+  "pypdf2<3",
+  "setuptools<71", # https://github.com/pypa/setuptools/issues/4516
+  "werkzeug==3.0.*",
+  "xlrd<2",  # for xlsx support
+  {%- elif odoo_series == "18.0" %}
+  "pypdf2<3",
+  "werkzeug==3.0.*",
+  "xlrd<2",  # for xlsx support
+  {%- endif %}
 ]
 addons_dirs = ["odoo/addons"]
 
