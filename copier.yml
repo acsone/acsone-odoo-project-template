@@ -9,6 +9,8 @@ _envops:
   keep_trailing_newline: true
   variable_end_string: "}}"
   variable_start_string: "{{"
+_tasks:
+  - rm .eslintrs.yml
 
 project_name:
   type: str
