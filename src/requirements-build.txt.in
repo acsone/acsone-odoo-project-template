@@ -7,6 +7,6 @@ setuptools
 setuptools-odoo
 wheel
 # below is for xmlsec
-setuptools_scm[toml]>=3.4'
+setuptools_scm[toml]>=3.4
 pkgconfig>=1.5.1
 lxml>=3.8, !=4.7.0
