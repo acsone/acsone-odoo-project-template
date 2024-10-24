@@ -10,7 +10,7 @@ _envops:
   variable_end_string: "}}"
   variable_start_string: "{{"
 _tasks:
-  - rm .eslintrs.yml
+  - rm -f .eslintrc.yml
 
 project_name:
   type: str
