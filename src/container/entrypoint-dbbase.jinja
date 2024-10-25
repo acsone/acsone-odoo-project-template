@@ -4,6 +4,8 @@ import subprocess
 import sys
 import time
 
+# ignore print statement and subprocess rules
+# ruff: noqa: T201, S603, S607
 
 def check_call(cmd):
     print(" ".join(cmd))
