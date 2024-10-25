@@ -144,7 +144,7 @@ build-prod-image:
     - /^\d+\.\d+\.\d+$/
   when: manual
 
-{%- if deploy_triggers %}
+{%- if deploy_branch %}
 # deployments
 
 .deploy-trigger:
