@@ -20,6 +20,7 @@ pre-commit:
   extends: .pre-commit
   variables:
     ACIT_PYTHON_IMAGE: "python:{{ python_version }}"
+    ACIT_PRE_COMMIT_VERSION: "4.0.1"
 
 .test_common:
   variables:
