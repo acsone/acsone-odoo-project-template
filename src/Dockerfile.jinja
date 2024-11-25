@@ -42,8 +42,8 @@ RUN set -e \
 
 # Configure ssh.
 RUN mkdir $HOME/.ssh \
-  && echo "Host github.com\n  StrictHostKeyChecking no" >> $HOME/.ssh/config \
-  && echo "PubkeyAcceptedKeyTypes=+ssh-rsa" >> $HOME/.ssh/config
+ && ssh-keyscan github.com >> $HOME/.ssh/known_hosts \
+ && ssh-keyscan gitlab.acsone.eu >> $HOME/.ssh/known_hosts
 
 # Configure pip:
 # - use pep517 builds always (no setup.py bdist_wheel)
