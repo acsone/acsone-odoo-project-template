@@ -167,7 +167,7 @@ build-prod-image:
 deploy-review-trigger:
   extends: .deploy-trigger
   variables:
-    DEPLOY_BRANCH: deploy-test
+    DEPLOY_BRANCH: deploy
     IMAGE_FLAVOR: /review
   needs:
     - job: build-review-image
@@ -180,7 +180,7 @@ deploy-review-trigger:
 deploy-test-trigger:
   extends: .deploy-trigger
   variables:
-    DEPLOY_BRANCH: deploy-test
+    DEPLOY_BRANCH: deploy
     IMAGE_FLAVOR: /test
   environment:
     name: test
@@ -192,7 +192,7 @@ deploy-test-trigger:
 deploy-uat-trigger:
   extends: .deploy-trigger
   variables:
-    DEPLOY_BRANCH: deploy-test
+    DEPLOY_BRANCH: deploy
     IMAGE_FLAVOR: /uat
   environment:
     name: uat
@@ -204,7 +204,7 @@ deploy-uat-trigger:
 deploy-prod-trigger:
   extends: .deploy-trigger
   variables:
-    DEPLOY_BRANCH: deploy-prod
+    DEPLOY_BRANCH: deploy
     IMAGE_FLAVOR: /prod
   environment:
     name: prod
