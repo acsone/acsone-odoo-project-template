@@ -22,6 +22,6 @@
   target: acsone {{ odoo_series }}-{{ project_trigram }}_master
   shell_command_after:
     # Add a pyproject.toml so pip wheel works.
-    - gh --repo acsone/enterprise pr diff {% if odoo_series == "16.0" %}12{% else %}TODO{% endif %} --patch | git am
+    - gh --repo acsone/enterprise pr diff {% if odoo_series == "18.0" %}18{% elif odoo_series == "16.0" %}12{% else %}TODO{% endif %} --patch | git am
 
 {%- endif %}
