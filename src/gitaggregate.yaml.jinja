@@ -5,11 +5,6 @@
     acsone: ssh://git@github.com/acsone/odoo.git
   merges:
     - oca {{ odoo_series }}
-  shell_command_after:
-    # pyproject.toml
-    - curl -sSL https://github.com/odoo/odoo/pull/44001.patch | git am
-    # Support python -m odoo, for debugging configuration comfort.
-    - curl -sL https://github.com/odoo/odoo/pull/81864.patch | git am
   target: acsone {{ odoo_series }}-{{ project_trigram }}_master
 {%- if odoo_enterprise %}
 
