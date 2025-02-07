@@ -97,10 +97,6 @@ push-pot:
 
 .build-publish-image:
   extends: .build-publish-image-buildkit-localpods
-  {%- if odoo_enterprise %}
-  variables:
-    ACIT_SSH_KEY: $SSH_DEPLOY_KEY
-  {%- endif %}
 
 build-dependencies-image:
   extends: .build-publish-image
