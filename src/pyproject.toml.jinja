@@ -8,7 +8,7 @@ build-backend = "hatchling.build"
 [project]
 name = "odoo-{{ project_name|lower|replace(' ', '-') }}"
 description = "{{ project_name }} Odoo Addons"
-version = "{{ odoo_series }}.1.0.0"
+version = "{{ odoo_series }}.{{ project_version }}"
 readme = "README.md"
 requires-python = "=={{ python_version }}.*"
 # Dependencies are dynamic because they will be generated from Odoo addons manifests.

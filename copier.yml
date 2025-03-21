@@ -28,6 +28,11 @@ odoo_series:
     - "17.0"
     - "18.0"
 
+project_version:
+  type: str
+  default: "1.0.0"
+  help: "Set the project version. This is useful when updating an existing project."
+
 odoo_enterprise:
   type: bool
   default: False
