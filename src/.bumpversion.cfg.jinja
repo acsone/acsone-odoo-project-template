@@ -1,11 +1,13 @@
 [bumpversion]
-current_version = 1.0.0
+current_version = {{ project_version }}
 commit = True
 tag = True
 tag_name = {new_version}
 tag_message = {new_version}
 
 [bumpversion:file:.bumpversion.cfg]
+
+[bumpversion:file:.copier-answers.yml]
 
 [bumpversion:file:pyproject.toml]
 
