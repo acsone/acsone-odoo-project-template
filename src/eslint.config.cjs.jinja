@@ -152,7 +152,11 @@ const config = [{
         strict: ["error", "function"],
         "use-isnan": "error",
 
+        {%- if odoo_series not in ("16.0", "17.0") %}
         "jsdoc/check-tag-names": "warn",
+        {%- else %}
+        "jsdoc/check-tag-names": ["warn", { "definedTags": ["odoo-module"] }],
+        {%- endif %}
         "jsdoc/check-types": "warn",
         "jsdoc/require-param-description": "off",
         "jsdoc/require-return": "off",
