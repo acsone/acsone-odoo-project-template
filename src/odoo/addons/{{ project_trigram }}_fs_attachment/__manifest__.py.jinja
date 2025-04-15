@@ -16,6 +16,8 @@
     "external_dependencies": {
         "python": [
             "s3fs",
+            # https://github.com/fsspec/filesystem_spec/issues/1805
+            "fsspec>=2024,!=2025.3.0",
         ]
     },
     "data": [
