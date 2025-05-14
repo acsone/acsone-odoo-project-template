@@ -40,6 +40,14 @@ python_version:
     - "3.11"
     - "3.12"
 
+distro:
+  type: str
+  default: noble
+  choices:
+    - noble
+    - jammy
+  help: "Base distro of the odoo-bedrock image"
+
 kwkhtmltopdf_test_service:
   type: bool
   default: false
