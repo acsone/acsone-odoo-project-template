@@ -3,9 +3,9 @@
 #######################################################################################
 # base stage, with the non-python runtime dependencies
 #
-
-FROM ghcr.io/acsone/odoo-bedrock:{{ odoo_series }}-py{{ python_version|replace('.', '') }}-{{ distro }}-latest as base
-
+ARG DISTRO={{ distro }}
+FROM ghcr.io/acsone/odoo-bedrock:{{ odoo_series }}-py{{ python_version|replace('.', '') }}-${DISTRO}-latest as base
+ARG DISTRO
 # Install apt runtime dependencies.
 # - postgresql-client for comfort in the shell container and for db dump to work
 # - expect to have unbuffer in CI
@@ -76,19 +76,19 @@ RUN pip-split-requirements \
 FROM build-deps as build-odoo
 COPY --from=split-requirements /reqs/requirements-group-odoo.txt /build/reqs.txt
 RUN --mount=type=ssh \
-    --mount=type=cache,target=/root/.cache/pip,id=pip-{{ distro }} \
+    --mount=type=cache,target=/root/.cache/pip,id=pip-${DISTRO} \
     pip wheel --no-deps --wheel-dir=/build -r /build/reqs.txt
 
 FROM build-deps as build-odoo-addons
 COPY --from=split-requirements /reqs/requirements-group-odoo-addons.txt /build/reqs.txt
 RUN --mount=type=ssh \
-    --mount=type=cache,target=/root/.cache/pip,id=pip-{{ distro }} \
+    --mount=type=cache,target=/root/.cache/pip,id=pip-${DISTRO} \
     pip wheel --no-deps --wheel-dir=/build -r /build/reqs.txt
 
 FROM build-deps as build-other
 COPY --from=split-requirements /reqs/requirements-group-other.txt /build/reqs.txt
 RUN --mount=type=ssh \
-    --mount=type=cache,target=/root/.cache/pip,id=pip-{{ distro }} \
+    --mount=type=cache,target=/root/.cache/pip,id=pip-${DISTRO} \
     pip wheel --no-deps --wheel-dir=/build -r /build/reqs.txt
 
 #######################################################################################
@@ -125,5 +125,5 @@ FROM dependencies as runtime
 COPY . /app
 RUN python -m compileall /app/odoo /app/odoo_{{ project_name|lower|replace(' ', '_') }}
 RUN --mount=type=bind,target=/build-deps,source=/build-deps,from=build-deps \
-  --mount=type=cache,target=/root/.cache/pip,id=pip-{{ distro }} \
+  --mount=type=cache,target=/root/.cache/pip,id=pip-${DISTRO} \
   pip install --no-index --find-links /build-deps --editable /app
