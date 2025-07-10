@@ -76,6 +76,9 @@ dependencies = [
   "pypdf2<3",
   "werkzeug==3.0.*",
   {%- endif %}
+  {%- if python_version == "3.12" %}
+  "rl-renderPM",  # required for barcode printing in python 3.12+
+  {%- endif %}
 ]
 addons_dirs = ["odoo/addons"]
 
