@@ -63,3 +63,8 @@ review_environments:
   default: true
   help: Generate GitLab CI review environment (image and deploy triggers).
   when: "{{ deploy_branch }}"
+
+use_weblate:
+  type: bool
+  default: false
+  help: This project uses Weblate to update .po files

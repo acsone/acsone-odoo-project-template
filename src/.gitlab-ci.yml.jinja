@@ -70,7 +70,7 @@ test:
     - unbuffer coverage run  /odoo/bin/odoo -c odoo-ci.cfg -d ${DB_NAME} --stop-after-init -i ${ADDONS_TEST} | checklog-odoo
     - echo Testing project addons ${ADDONS_TEST}
     - unbuffer coverage run /odoo/bin/odoo -c odoo-ci.cfg -d ${DB_NAME} --stop-after-init --test-tags /${ADDONS_TEST//,/,\/} --test-enable | checklog-odoo
-    - if [ "${CI_COMMIT_REF_NAME}" = "master" ] ; then click-odoo-makepot -c odoo-ci.cfg -d ${DB_NAME} --msgmerge --addons-dir=odoo/addons ; fi
+    - if [ "${CI_COMMIT_REF_NAME}" = "master" ] ; then click-odoo-makepot -c odoo-ci.cfg -d ${DB_NAME} {% if not use_weblate %}--msgmerge {% endif %}--addons-dir=odoo/addons ; fi
   after_script:
     - dropdb --if-exists ${DB_NAME}
   artifacts:
