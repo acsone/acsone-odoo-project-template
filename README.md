@@ -13,15 +13,15 @@ free to draw inspiration. Feedback is welcome in
 
 ### Initializing a new project
 
-`pipx run copier copy git+https://github.com/acsone/acsone-odoo-project-template {project-root-dir}`
+`pipx run copier copy --trust --vcs-ref=master gh:acsone/acsone-odoo-project-template {project-root-dir}`
 
 This will ask questions and create the `{project-root-dir}` directory and initialize the
 project inside it.
 
 ### Updating an existing project
 
-Inside the project root, run `pipx run copier update  -f`, or `pipx run copier update` if you want to
-change the answers to some questions.
+Inside the project root, run `pipx run copier update --trust -f`, or `pipx run
+copier update --trust` if you want to change the answers to some questions.
 
 ## How to use the generated project
 
