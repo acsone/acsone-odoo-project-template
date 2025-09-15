@@ -17,24 +17,19 @@
 
 ### Development requirements
 
-- Install [pip-deepfreeze](https://pypi.python.org/pypi/pip-deepfreeze) with `pipx install pip-deepfreeze`
-- Install [pip-preserve-requirements](https://pypi.python.org/pypi/pip-preserve-requirements) with `pipx install pip-preserve-requirements`
-- Install [bump2version](https://pypi.python.org/pypi/bump2version) with `pipx install bump2version`
-- [git-aggregator](https://pypi.python.org/pypi/git-aggregator) (`pipx install git-aggregator`) is also occasionally useful to
-  combine multiple pull requests into a single branch (see `gitaggregate.yaml`).
-- To make git-aggregate run faster on large repositories such as Odoo, it is recommended to install [git-autoshare](https://pypi.python.org/pypi/git-autoshare) with `pipx install
-  git-autoshare`. Don't forget to configure it according to the documentation.
+Install [mise](https://github.com/jdx/mise).
 
 ### Preliminary steps
 
 - Clone the repository
 - Prepare the project-specific Odoo branch by running `gitaggregate -c gitaggregate.yaml -p`.
+- To make git-aggregate run faster on large repositories such as Odoo, it is recommended to install [git-autoshare](https://pypi.python.org/pypi/git-autoshare). Don't forget to configure it according to the documentation.
 - Pin the build dependencies using for CI by running `./sync-build.sh`
 
 ### Initialize virtualenv
 
-- Create and activate virtualenv, possibly with virtualenvwrapper's
-  `mkvirtualenv odoo-{{ project_name|lower|replace(' ', '-') }} -a . --python=python{{ python_version }}`
+In the project root directory, run `mise trust` and `mise install`. Then, by changing to the project directory
+the virtual environment will be created and activated automatically, and all tools to work on the project will be available.
 
 ### Install everything
 
