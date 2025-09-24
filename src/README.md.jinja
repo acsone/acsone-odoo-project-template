@@ -28,6 +28,7 @@
 ### Preliminary steps
 
 - Clone the repository
+- Set up Github CLI with `gh auth login` (It is mandatory because gitaggregate will fail the aggregation without returning an error)
 - Prepare the project-specific Odoo branch by running `gitaggregate -c gitaggregate.yaml -p`.
 - Pin the build dependencies using for CI by running `./sync-build.sh`
 
