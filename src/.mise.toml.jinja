@@ -1,0 +1,10 @@
+[env]
+_.python.venv = { path = "~/.virtualenvs/odoo-{{ project_name|lower|replace(' ', '_') }}", create = true, python = "{{ python_version }}" }
+
+[tools]
+uv = "latest"
+"pipx:bump2version" = "latest"
+"pipx:git-aggregator" = "latest"
+"pipx:pip-deepfreeze" = "latest"
+"pipx:pip-preserve-requirements" = "latest"
+"pipx:pre-commit" = "latest"
