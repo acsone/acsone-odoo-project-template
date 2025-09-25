@@ -39,6 +39,14 @@ python_version:
     - "3.10"
     - "3.11"
     - "3.12"
+  
+main_branch_name:
+  type: str
+  default: "main"
+  choices:
+    - "main"
+    - "master"
+  help: "Initial git branch"
 
 distro:
   type: str

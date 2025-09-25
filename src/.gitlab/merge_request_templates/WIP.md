@@ -4,4 +4,4 @@
 
 /assign me
 /draft
-/target_branch master
+/target_branch {{ main_branch_name }}
