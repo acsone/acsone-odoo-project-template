@@ -61,6 +61,9 @@ dependencies = [
   {%- if odoo_series == "18.0" %}
   "packaging",  # https://github.com/odoo/odoo/pull/181768
   {%- endif %}
+  {%- if odoo_series == "19.0" %}
+  "packaging",
+  {%- endif %}
   # Constraints
   {%- if odoo_series == "16.0" %}
   "pypdf2<3",
@@ -73,6 +76,9 @@ dependencies = [
   "werkzeug==3.0.*",
   "xlrd<2",  # for xlsx support
   {%- elif odoo_series == "18.0" %}
+  "pypdf2<3",
+  "werkzeug==3.0.*",
+  {%- elif odoo_series == "19.0" %}
   "pypdf2<3",
   "werkzeug==3.0.*",
   {%- endif %}
