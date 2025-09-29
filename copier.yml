@@ -22,7 +22,7 @@ project_trigram:
 
 odoo_series:
   type: str
-  default: "18.0"
+  default: "19.0"
   choices:
     - "16.0"
     - "17.0"
@@ -35,7 +35,7 @@ odoo_enterprise:
 
 python_version:
   type: str
-  default: "3.12"
+  default: "3.13"
   choices:
     - "3.10"
     - "3.11"
