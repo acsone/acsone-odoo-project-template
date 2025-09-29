@@ -22,11 +22,12 @@ project_trigram:
 
 odoo_series:
   type: str
-  default: "18.0"
+  default: "19.0"
   choices:
     - "16.0"
     - "17.0"
     - "18.0"
+    - "19.0"
 
 odoo_enterprise:
   type: bool
@@ -34,12 +35,13 @@ odoo_enterprise:
 
 python_version:
   type: str
-  default: "3.12"
+  default: "3.13"
   choices:
     - "3.10"
     - "3.11"
     - "3.12"
-  
+    - "3.13"
+
 main_branch_name:
   type: str
   default: "main"
