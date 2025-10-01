@@ -42,7 +42,7 @@ packages = ["odoo", "odoo_{{ project_name|lower|replace(' ', '_') }}"]
 odoo_version_override = "{{ odoo_series }}"
 # Add dependencies that are not declared in Odoo addons manifests.
 dependencies = [
-  "click-odoo-contrib",
+  "click-odoo-contrib>=1.22",
   {%- if odoo_enterprise %}
   # Odoo enterprise addons
   "odoo-addons-enterprise",

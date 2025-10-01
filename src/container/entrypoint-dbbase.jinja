@@ -48,14 +48,14 @@ if db_name:
         check_call(
             [
                 "click-odoo-initdb",
-                "--unless-exists",
+                # initialize existing empty db created by copydb
+                "--unless-initialized",
+                # cache is not very useful in this context
+                "--no-cache",
+                # store attachments in db until fs_attachment takes over
+                "--attachments-in-db"
                 "-n",
                 database,
-                # Don't use --no-cache so attachments created before fs_attachment
-                # is configured are stored in the database instead of the filesystem
-                # (where the would be lost upon restart of the container).
-                # https://github.com/acsone/click-odoo-contrib/issues/146
-                # "--no-cache",
                 "-m",
                 "{{ project_trigram }}_fs_attachment,server_environment_ir_config_parameter",
             ]
