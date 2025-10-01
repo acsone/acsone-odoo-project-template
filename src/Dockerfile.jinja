@@ -43,7 +43,7 @@ RUN set -e \
   && rm -rf /var/lib/apt/lists/*
 
 # Configure ssh.
-RUN mkdir $HOME/.ssh \
+RUN mkdir -p $HOME/.ssh \
  && ssh-keyscan github.com >> $HOME/.ssh/known_hosts \
  && ssh-keyscan gitlab.acsone.eu >> $HOME/.ssh/known_hosts
 
