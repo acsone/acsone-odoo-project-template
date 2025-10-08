@@ -30,6 +30,7 @@ pre-commit:
     DB_USER: $PGUSER
     DB_PASSWORD: $PGPASSWORD
     DB_NAME: "${CI_PROJECT_NAME}-${CI_JOB_ID}"
+    RUNNING_ENV: dev
   image: ${CI_REGISTRY_IMAGE}/dependencies:${CI_COMMIT_SHA}
   interruptible: true
   needs:
