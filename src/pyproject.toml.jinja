@@ -90,10 +90,11 @@ addons_dirs = ["odoo/addons"]
 #
 
 [tool.pip-deepfreeze]
-min_version = "2.0"
+min_version = "3.1"
 
 [tool.pip-deepfreeze.sync]
 installer = "uvpip"
+build_constraints = "requirements-build.txt"
 extras = "test,dev"
 post_sync_commands = [
   "pip-preserve-requirements requirements*.txt",
