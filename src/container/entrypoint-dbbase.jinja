@@ -4,6 +4,8 @@ import subprocess
 import sys
 import time
 
+import psycopg2
+
 # ignore print statement and subprocess rules
 # ruff: noqa: T201, S603, S607
 
@@ -13,6 +15,20 @@ def check_call(cmd):
     sys.stdout.flush()
     subprocess.check_call(cmd)
 
+
+def is_neutralized(database):
+    with psycopg2.connect(
+        dbname=database, user=os.getenv("DB_USER"), password=os.getenv("DB_PASSWORD")
+    ) as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT value FROM ir_config_parameter
+                WHERE key = 'database.is_neutralized'
+                """
+            )
+            rec = cur.fetchone()
+            return rec and rec[0] and rec[0].lower() == "true"
 
 # wait for postgres to be ready
 sleep = 1
@@ -57,12 +73,12 @@ if db_name:
                 "-n",
                 database,
                 "-m",
-                # If you don't want to install all modules, you at least need these two.
+                # If you don't want to preinstall all modules, you at least need these two.
                 # "{{ project_trigram }}_fs_attachment,server_environment_ir_config_parameter",
                 "{{ project_trigram }}_all{% if odoo_enterprise %},{{ project_trigram }}_all_enterprise{% endif %}",
             ]
         )
-        if running_env != "prod":
+        if running_env != "prod" and not is_neutralized(database):
             check_call(
                 [
                     "odoo",
