@@ -87,6 +87,15 @@ if db_name:
                     database,
                 ]
             )
+            check_call(
+                [
+                    "psql",
+                    "-d",
+                    database,
+                    "-f",
+                    "/app/container/post-neutralize.sql",
+                ]
+            )
         check_call(
             [
                 "click-odoo-update",
