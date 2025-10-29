@@ -57,7 +57,9 @@ if db_name:
                 "-n",
                 database,
                 "-m",
-                "{{ project_trigram }}_fs_attachment,server_environment_ir_config_parameter",
+                # If you don't want to install all modules, you at least need these two.
+                # "{{ project_trigram }}_fs_attachment,server_environment_ir_config_parameter",
+                "{{ project_trigram }}_all{% if odoo_enterprise %},{{ project_trigram }}_all_enterprise{% endif %}",
             ]
         )
         if running_env != "prod":
