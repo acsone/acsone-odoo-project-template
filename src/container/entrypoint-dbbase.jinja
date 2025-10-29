@@ -3,6 +3,7 @@ import os
 import subprocess
 import sys
 import time
+from pathlib import Path
 
 import psycopg2
 
@@ -29,6 +30,12 @@ def is_neutralized(database):
             )
             rec = cur.fetchone()
             return rec and rec[0] and rec[0].lower() == "true"
+
+
+def is_filestore_empty(database):
+    filestore = Path("/data/odoo/filestore") / database
+    return not filestore.exists()
+
 
 # wait for postgres to be ready
 sleep = 1
@@ -105,6 +112,11 @@ if db_name:
                 "--i18n-overwrite",
             ]
         )
+        if not is_filestore_empty(database):
+            raise SystemExit(
+                f"Filestore is not empty after init or update of {database!r} db, "
+                f"giving up. Check configuration."
+            )
 
 # wait for wkhtmltopdf to be ready
 sleep = 1
