@@ -3,6 +3,9 @@ import os
 import subprocess
 import sys
 import time
+from pathlib import Path
+
+import psycopg2
 
 # ignore print statement and subprocess rules
 # ruff: noqa: T201, S603, S607
@@ -12,6 +15,26 @@ def check_call(cmd):
     print(" ".join(cmd))
     sys.stdout.flush()
     subprocess.check_call(cmd)
+
+
+def is_neutralized(database):
+    with psycopg2.connect(
+        dbname=database, user=os.getenv("DB_USER"), password=os.getenv("DB_PASSWORD")
+    ) as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT value FROM ir_config_parameter
+                WHERE key = 'database.is_neutralized'
+                """
+            )
+            rec = cur.fetchone()
+            return rec and rec[0] and rec[0].lower() == "true"
+
+
+def is_filestore_empty(database):
+    filestore = Path("/data/odoo/filestore") / database
+    return not filestore.exists()
 
 
 # wait for postgres to be ready
@@ -57,16 +80,27 @@ if db_name:
                 "-n",
                 database,
                 "-m",
-                "{{ project_trigram }}_fs_attachment,server_environment_ir_config_parameter",
+                # If you don't want to preinstall all modules, you at least need these two.
+                # "{{ project_trigram }}_fs_attachment,server_environment_ir_config_parameter",
+                "{{ project_trigram }}_all{% if odoo_enterprise %},{{ project_trigram }}_all_enterprise{% endif %}",
             ]
         )
-        if running_env != "prod":
+        if running_env != "prod" and not is_neutralized(database):
             check_call(
                 [
                     "odoo",
                     "neutralize",
                     "-d",
                     database,
+                ]
+            )
+            check_call(
+                [
+                    "psql",
+                    "-d",
+                    database,
+                    "-f",
+                    "/app/container/post-neutralize.sql",
                 ]
             )
         check_call(
@@ -78,6 +112,11 @@ if db_name:
                 "--i18n-overwrite",
             ]
         )
+        if not is_filestore_empty(database):
+            raise SystemExit(
+                f"Filestore is not empty after init or update of {database!r} db, "
+                f"giving up. Check configuration."
+            )
 
 # wait for wkhtmltopdf to be ready
 sleep = 1
