@@ -88,8 +88,6 @@ coverage:
 
 push-pot:
   extends: .push-pot
-  variables:
-    ACIT_SSH_KEY: $SSH_DEPLOY_KEY
   needs:
     - job: test
       artifacts: true
