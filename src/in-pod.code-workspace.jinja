@@ -1,0 +1,55 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../odoo/lib/python{{ python_version }}/site-packages/odoo"
+		}
+	],
+	"settings": {},
+	"extensions": {
+		"recommendations": [
+			"ms-python.python"
+		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "odoo",
+				"type": "debugpy",
+				"request": "launch",
+				"justMyCode": false,
+				"module": "odoo",
+				"args": [
+					"--workers=0",
+					"--limit-time-real=600"
+				],
+			},
+			{
+				"name": "click-odoo",
+				"type": "debugpy",
+				"request": "launch",
+				"justMyCode": false,
+				"module": "click_odoo",
+				"args": [],
+			},
+            {
+                "name": "run script",
+                "type": "debugpy",
+                "request": "launch",
+                "stopOnEntry": false,
+                "program": "/odoo/bin/click-odoo",
+                "args": [
+                    "-c",
+                    "/etc/odoo.cfg",
+                    "-d",
+                    "odoo",
+                    "/app/scripts/your_script.py"
+                ],
+                "justMyCode": false,
+            },
+		]
+	}
+}
