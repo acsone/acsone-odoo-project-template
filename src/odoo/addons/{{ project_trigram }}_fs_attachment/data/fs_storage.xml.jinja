@@ -9,7 +9,7 @@
     <field name="name">Attachements Production</field>
     <field name="code">fsprod</field>
     <field name="protocol">s3</field>
-    <field name="directory_path">odoo-{{ project_name | lower }}-prod</field>
+    <field name="directory_path">odoo-{{ project_name | lower | replace(' ', '-') }}-prod</field>
     <field name="eval_options_from_env" eval="True" />
     <field name="use_filename_obfuscation" eval="True" />
     <field name="optimizes_directory_path" eval="True" />
@@ -31,7 +31,7 @@
     <field name="name">Attachements UAT</field>
     <field name="code">fsuat</field>
     <field name="protocol">s3</field>
-    <field name="directory_path">odoo-{{ project_name | lower }}-uat</field>
+    <field name="directory_path">odoo-{{ project_name | lower | replace(' ', '-') }}-uat</field>
     <field name="eval_options_from_env" eval="True" />
     <field name="use_filename_obfuscation" eval="True" />
     <field name="optimizes_directory_path" eval="True" />
@@ -53,7 +53,7 @@
     <field name="name">Attachements Test</field>
     <field name="code">fstest</field>
     <field name="protocol">s3</field>
-    <field name="directory_path">odoo-{{ project_name | lower }}-test</field>
+    <field name="directory_path">odoo-{{ project_name | lower | replace(' ', '-') }}-test</field>
     <field name="eval_options_from_env" eval="True" />
     <field name="use_filename_obfuscation" eval="True" />
     <field name="optimizes_directory_path" eval="True" />
