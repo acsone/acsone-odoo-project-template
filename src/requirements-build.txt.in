@@ -5,6 +5,7 @@ hatchling
 hatch-odoo
 setuptools
 setuptools-odoo
+whool
 wheel
 # below is for xmlsec
 setuptools_scm[toml]>=3.4
