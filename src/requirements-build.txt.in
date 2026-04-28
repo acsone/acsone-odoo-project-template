@@ -4,7 +4,9 @@ editables
 hatchling
 hatch-odoo
 setuptools
+{%- if odoo_series < "17.0" %}
 setuptools-odoo
+{%- endif %}
 whool
 wheel
 # below is for xmlsec
