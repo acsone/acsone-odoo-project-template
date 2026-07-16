@@ -11,6 +11,7 @@ _envops:
   variable_start_string: "{{"
 _tasks:
   - rm -f .eslintrc.yml
+_preserve_symlinks: true
 
 project_name:
   type: str
