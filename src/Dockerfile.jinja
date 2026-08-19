@@ -4,7 +4,7 @@
 # base stage, with the non-python runtime dependencies
 #
 ARG DISTRO={{ distro }}
-FROM ghcr.io/acsone/odoo-bedrock:{{ odoo_series }}-py{{ python_version|replace('.', '') }}-${DISTRO}-latest as base
+FROM ghcr.io/acsone/odoo-bedrock:{{ odoo_series }}-py{{ python_version|replace('.', '') }}-${DISTRO}-latest AS base
 ARG DISTRO
 # Install apt runtime dependencies.
 # - postgresql-client for comfort in the shell container and for db dump to work
@@ -27,7 +27,7 @@ RUN set -e \
 # and install tools necessary to build source distributions.
 #
 
-FROM base as build-deps
+FROM base AS build-deps
 
 # Install git.
 RUN set -e \
@@ -64,7 +64,7 @@ RUN pip wheel --only-binary=:all: --no-deps --wheel-dir=/build-deps -r /build-de
 # --no-deps is to make sure we have pinned them all
 #
 
-FROM python:3.11-slim as split-requirements
+FROM python:3.11-slim AS split-requirements
 RUN pip install "pip-split-requirements>=0.7"
 WORKDIR /reqs/
 COPY requirements*.txt /reqs/
@@ -74,19 +74,19 @@ RUN pip-split-requirements \
     --prefix="requirements-group" \
     requirements.txt requirements-test.txt
 
-FROM build-deps as build-odoo
+FROM build-deps AS build-odoo
 COPY --from=split-requirements /reqs/requirements-group-odoo.txt /build/reqs.txt
 RUN --mount=type=ssh \
     --mount=type=cache,target=/root/.cache/pip,id=pip-${DISTRO} \
     pip wheel --no-deps --wheel-dir=/build -r /build/reqs.txt
 
-FROM build-deps as build-odoo-addons
+FROM build-deps AS build-odoo-addons
 COPY --from=split-requirements /reqs/requirements-group-odoo-addons.txt /build/reqs.txt
 RUN --mount=type=ssh \
     --mount=type=cache,target=/root/.cache/pip,id=pip-${DISTRO} \
     pip wheel --no-deps --wheel-dir=/build -r /build/reqs.txt
 
-FROM build-deps as build-other
+FROM build-deps AS build-other
 COPY --from=split-requirements /reqs/requirements-group-other.txt /build/reqs.txt
 RUN --mount=type=ssh \
     --mount=type=cache,target=/root/.cache/pip,id=pip-${DISTRO} \
@@ -97,7 +97,7 @@ RUN --mount=type=ssh \
 # This stage basically installs everything we need at runtime, except the app itself.
 #
 
-FROM base as dependencies
+FROM base AS dependencies
 
 # Install python dependencies we built in the build stage.
 # Use --no-deps and --no-index to be sure to not download anything else.
@@ -118,7 +118,7 @@ COPY ./container/entrypoint-dbbase /odoo/start-entrypoint.d/
 # runtime stage, installs the app in editable mode, on top of dependencies.
 #
 
-FROM dependencies as runtime
+FROM dependencies AS runtime
 
 # Install the app in editable mode.
 # Here we don't use --no-deps but we do use --no-index to be sure that all dependencies
