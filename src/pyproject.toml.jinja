@@ -90,6 +90,30 @@ dependencies = [
 addons_dirs = ["odoo/addons"]
 
 #####################################################################################
+# bump-my-version
+#
+# current_version is the 3-component project version. project.version and the addon
+# manifests are prefixed with the Odoo series and updated by substring substitution.
+# project.version and current_version are synchronized natively by bump-my-version,
+# so pyproject.toml must not be listed in the files below.
+# tag_name and tag_message are overridden because the GitLab CI build and deploy jobs
+# are gated on tags matching ^\d+\.\d+\.\d+$ (bump-my-version defaults to v{new_version}).
+
+[tool.bumpversion]
+current_version = "1.0.0"
+commit = true
+tag = true
+tag_name = "{new_version}"
+tag_message = "{new_version}"
+
+files = [
+  { filename = "odoo/addons/{{ project_trigram }}_all/__manifest__.py" },
+  { filename = "odoo/addons/server_environment_files/dev/dev.conf" },
+  { filename = "odoo/addons/server_environment_files/test/test.conf" },
+  { filename = "odoo/addons/server_environment_files/uat/uat.conf" },
+]
+
+#####################################################################################
 # pip-deepfreeze and post-sync commands
 #
 
