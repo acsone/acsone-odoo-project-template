@@ -128,3 +128,4 @@ RUN python -m compileall /app/odoo /app/odoo_{{ project_name|lower|replace(' ', 
 RUN --mount=type=bind,target=/build-deps,source=/build-deps,from=build-deps \
   --mount=type=cache,target=/root/.cache/pip,id=pip-${DISTRO} \
   pip install --no-index --find-links /build-deps --editable /app
+RUN chmod -R og-w /app
