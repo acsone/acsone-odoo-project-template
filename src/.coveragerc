@@ -7,9 +7,16 @@ parallel = True
 
 [report]
 omit =
+    */scenario/*
     */scenarios/*
+    */test/*
+    */tests/*
     */lib/*
-    */__manifest__.py
+    *_example/*
+    *__init__.py
+    *__manifest__.py
+    *hooks.py
+    *_parser.py
 
 # Regexes for lines to exclude from consideration
 exclude_lines =
