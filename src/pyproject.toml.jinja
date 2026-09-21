@@ -108,6 +108,9 @@ tag_message = "{new_version}"
 
 files = [
   { filename = "odoo/addons/{{ project_trigram }}_all/__manifest__.py" },
+  {%- if odoo_enterprise %}
+  { filename = "odoo/addons/{{ project_trigram }}_all_enterprise/__manifest__.py" },
+  {%- endif %}
   { filename = "odoo/addons/server_environment_files/dev/dev.conf" },
   { filename = "odoo/addons/server_environment_files/test/test.conf" },
   { filename = "odoo/addons/server_environment_files/uat/uat.conf" },
