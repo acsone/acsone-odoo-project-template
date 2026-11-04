@@ -64,7 +64,10 @@ dependencies = [
   {%- endif %}
   {%- if odoo_series == "19.0" %}
   "packaging",
+  {%- endif %}
   {%- if odoo_series == "20.0" %}
+  "markdown2",
+  "orjson",
   "packaging",
   {%- endif %}
   # Constraints
@@ -88,8 +91,6 @@ dependencies = [
   "pypdf2<3",
   "werkzeug==3.0.*",
   {%- elif odoo_series == "20.0" %}
-  "orjson",
-  "pypdf2<3",
   "werkzeug==3.0.*",
   {%- endif %}
 ]
