@@ -54,6 +54,7 @@ dependencies = [
   "freezegun",
   "lxml[html_clean]",
   "num2words",
+  "orjson",
   "pdfminer",
   "phonenumbers",
   "python-magic",
@@ -67,7 +68,6 @@ dependencies = [
   {%- endif %}
   {%- if odoo_series == "20.0" %}
   "markdown2",
-  "orjson",
   "packaging",
   {%- endif %}
   # Constraints
@@ -77,17 +77,14 @@ dependencies = [
   "werkzeug==2.0.*",
   "xlrd<2",  # for xlsx support
   {%- elif odoo_series == "17.0" %}
-  "orjson",
   "pypdf2<3",
   "setuptools<71", # https://github.com/pypa/setuptools/issues/4516
   "werkzeug==3.0.*",
   "xlrd<2",  # for xlsx support
   {%- elif odoo_series == "18.0" %}
-  "orjson",
   "pypdf2<3",
   "werkzeug==3.0.*",
   {%- elif odoo_series == "19.0" %}
-  "orjson",
   "pypdf2<3",
   "werkzeug==3.0.*",
   {%- elif odoo_series == "20.0" %}
