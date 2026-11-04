@@ -24,7 +24,7 @@ repos:
         language: fail
         files: '^\.bumpversion\.cfg$'
   - repo: https://github.com/oca/maintainer-tools
-    rev: b89f767503be6ab2b11e4f50a7557cb20066e667
+    rev: b8311a95009805a6e5593f0390f52c0fa350117f
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
@@ -76,18 +76,18 @@ repos:
       - id: mixed-line-ending
         args: ["--fix=lf"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.13.0"
+    rev: "v0.17.3"
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
       - id: ruff-format
   - repo: https://github.com/OCA/pylint-odoo
-    rev: v9.3.18
+    rev: v10.0.12
     hooks:
       - id: pylint_odoo
         files: odoo/addons/
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
-    rev: v0.1.1
+    rev: v0.2.27
     hooks:
       - id: oca-checks-odoo-module
       - id: oca-checks-po
