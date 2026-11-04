@@ -55,10 +55,11 @@ main_branch_name:
 
 distro:
   type: str
-  default: noble
+  default: resolute
   choices:
     - noble
     - jammy
+    - resolute
   help: "Base distro of the odoo-bedrock image"
 
 kwkhtmltopdf_test_service:
