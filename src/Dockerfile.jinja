@@ -16,7 +16,9 @@ RUN set -e \
        postgresql-client \
        expect \
        gettext \
+       {%- if distro in ("noble","jammy") %}
        libxmlsec1-openssl \
+       {%- endif %}
        libcairo2 \
        libmagic1 \
   && apt -y clean \
@@ -38,7 +40,10 @@ RUN set -e \
        python{{ python_version }}-dev \
        build-essential \
        libpq-dev \
-       pkg-config libxml2-dev libxmlsec1-dev \
+       pkg-config \
+       {%- if distro in ("noble","jammy") %}
+       libxml2-dev libxmlsec1-dev \
+       {%- endif %}
        libcairo2-dev \
   && apt -y clean \
   && rm -rf /var/lib/apt/lists/*
