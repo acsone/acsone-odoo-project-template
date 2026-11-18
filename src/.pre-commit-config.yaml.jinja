@@ -93,3 +93,14 @@ repos:
       - id: oca-checks-po
         args:
           - --disable=po-pretty-format
+  - repo: https://github.com/acsone/odoo-sort-manifest-depends
+    rev: v1.5
+    hooks:
+      - id: odoo-sort-manifest-depends
+        args:
+          [
+            --local-addons-dir=./odoo/addons/,
+            --odoo-version={{odoo_series}},
+            --project-name={{project_name}},
+            --oca-category=repository,
+          ]
