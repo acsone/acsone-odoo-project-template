@@ -109,6 +109,8 @@ build-review-image:
   extends: .build-publish-image
   variables:
     ACIT_IMAGE_FLAVOR: /review
+  needs:
+    - build-dependencies-image
   only:
     - branches
   except:
@@ -120,6 +122,8 @@ build-test-image:
   extends: .build-publish-image
   variables:
     ACIT_IMAGE_FLAVOR: /test
+  needs:
+    - build-dependencies-image
   only:
     - /^\d+\.\d+\.\d+$/
 
@@ -127,6 +131,8 @@ build-uat-image:
   extends: .build-publish-image
   variables:
     ACIT_IMAGE_FLAVOR: /uat
+  needs:
+    - build-dependencies-image
   only:
     - /^\d+\.\d+\.\d+$/
   when: manual
@@ -135,6 +141,8 @@ build-prod-image:
   extends: .build-publish-image
   variables:
     ACIT_IMAGE_FLAVOR: /prod
+  needs:
+    - build-dependencies-image
   only:
     - /^\d+\.\d+\.\d+$/
   when: manual
